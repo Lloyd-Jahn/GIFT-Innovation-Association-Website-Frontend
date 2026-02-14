@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D打印工坊预约系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/index.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo-group" style="display: flex; align-items: center;">
+                <a href="index.html" class="logo" style="text-decoration: none;">
+                    <img src="images/icons/溥渊LOGO.png" alt="溥渊LOGO" style="height: 40px; margin-right: 15px;">
+                </a>
+                <a href="index.html" class="logo" style="text-decoration: none;">
+                    <img src="images/icons/科协LOGO.jpg" alt="科协LOGO" style="height: 45px; margin-left: 27.3px;">
+                </a>
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> 首页</a>
+                <a href="workshop.html"><i class="fas fa-cube"></i> 3D打印工坊</a>
+                <a href="about.html"><i class="fas fa-info-circle"></i> 关于我们</a>
+                <a href="login.html" id="loginBtn"><i class="fas fa-sign-in-alt"></i> <span id="loginBtnText">登录 / 注册</span></a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="mission-banner">
+            <h1 class="mission-text">创新 · 实践 · 探索 · 卓越</h1>
+        </div>
+
+        <div class="gallery-container" id="galleryContainer">
+            <!-- 作品图片将通过API动态加载 -->
+            <div class="gallery-item">
+                <img src="images/3d-printing/display1.jpg" alt="展示图1">
+            </div>
+            <div class="gallery-item">
+                <img src="images/3d-printing/display2.jpg" alt="展示图2">
+            </div>
+            <div class="gallery-item">
+                <img src="images/3d-printing/display3.jpg" alt="展示图3">
+            </div>
+            <div class="gallery-item">
+                <img src="images/3d-printing/display4.jpg" alt="展示图4">
+            </div>
+        </div>
+
+        <div class="news-section">
+            <div class="announcement-icon">📢</div>
+            <div class="news-header">
+                <h2 class="news-title">新闻与公告</h2>
+            </div>
+
+            <ul class="news-list" id="newsList">
+                <!-- 新闻将通过API动态加载 -->
+                <li class="news-item">
+                    <h4><a href="#" style="color: inherit; text-decoration: none;">加载中...</a></h4>
+                    <p>正在获取最新新闻...</p>
+                </li>
+            </ul>
+            <div class="more-btn-container" style="margin-bottom: 0.5rem;">
+                <a href="#" class="more-btn" onclick="alert('更多新闻功能即将上线！'); return false;">查看更多</a>
+            </div>
+        </div>
+    </div>
+
+<footer>
+    <div class="wrapper footer" id="footer" 
+        style="background: #04285e; color: #fff; padding: 3rem 0 1rem 0; margin-top: 3rem; white-space: nowrap;">
+
+        <div class="inner" style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; overflow: hidden;">
+            <div class="mod clearfix" style="overflow: hidden;">
+
+                <!-- 顶部区域 - 外层grid布局，通过内边距和分隔线实现板块分隔 -->
+                <div class="foot-center" 
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0; margin-bottom: 3rem; overflow: hidden;">
+
+                    <!-- 左栏 - 学院信息 -->
+                    <div class="center1" style="overflow: hidden; padding: 0 2rem; border-right: 1px solid rgba(255,255,255,0.3);">
+                        <div class="schoolname" 
+                            style="font-size: 1.6rem; font-weight: bold; margin-bottom: 3rem; color: #fff; overflow: hidden; text-overflow: ellipsis;">
+                            溥渊未来技术学院
+                        </div>
+                        <div class="schoolinfo" style="color: #fff; line-height: 3; overflow: hidden; text-overflow: ellipsis;">
+                            <div class="address" 
+                                style="margin-bottom: 1rem; overflow: hidden; white-space: normal; line-height: 1.6;">
+                                上海市闵行区东川路800包玉刚图书馆东翼（临时办公场地）
+                            </div>
+                            <div class="tel" style="margin-bottom: 0.3rem;">021-54741175</div>
+                            <div class="postnum">200240</div>
+                        </div>
+                    </div>
+
+                    <!-- 中栏：友情链接 + 网站导航（内部通过分隔线分开） -->
+                    <div style="
+                        display: grid;
+                        grid-template-columns: 1fr 1px 1fr; /* 友情链接 + 分隔线 + 网站导航 */
+                        gap: 0; /* 取消间隙，通过内边距控制间距 */
+                        padding: 0 2rem;
+                        border-right: 1px solid rgba(255,255,255,0.3); /* 统一为左栏分隔线样式 */
+                        margin-right: -4rem;
+                    ">
+                        <!-- 友情链接 -->
+                        <div style="padding-right: 2rem; text-align: center;">
+                            <div class="name yh" 
+                                style="font-size: 1.1rem; font-weight: bold; margin-bottom: 1.8rem; color: #fff;">
+                                友情链接
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="margin-bottom: 1.8rem;"><a href="http://www.moe.gov.cn/" style="color: #fff; text-decoration: none;">教育部</a></li>
+                                <li style="margin-bottom: 1.8rem;"><a href="https://edu.sh.gov.cn/" style="color: #fff; text-decoration: none;">上海市教委</a></li>
+                                <li style="margin-bottom: 1.8rem;"><a href="https://www.sjtu.edu.cn/" style="color: #fff; text-decoration: none;">上海交大</a></li>
+                                <li style="margin-bottom: 1.8rem;"><a href="https://www.shsmu.edu.cn/" style="color: #fff; text-decoration: none;">交大医学院</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- 友情链接和网站导航之间的分隔线（统一样式） -->
+                        <div style="background-color: rgba(255,255,255,0.3); width: 1px; height: auto; align-self: stretch;"></div>
+
+                        <!-- 网站导航 -->
+                        <div style="padding-left: 2rem; display: flex; justify-content: flex-end;">
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
+                                <ul style="list-style: none; padding: 0; margin-top: 0.1rem; text-align: center;">
+                                    <li style="margin-bottom: 2rem;"><a href="https://gift.sjtu.edu.cn/about" style="color: #fff; text-decoration: none; font-weight: bold;">关于溥渊</a></li>
+                                    <li style="margin-bottom: 2rem;"><a href="https://gift.sjtu.edu.cn/research" style="color: #fff; text-decoration: none; font-weight: bold;">科学研究</a></li>
+                                    <li style="margin-bottom: 2rem;"><a href="https://gift.sjtu.edu.cn/party" style="color: #fff; text-decoration: none; font-weight: bold;">党建工作</a></li>
+                                    <li style="margin-bottom: 2rem;"><a href="https://gift.sjtu.edu.cn/cooperation" style="color: #fff; text-decoration: none; font-weight: bold;">对外合作</a></li>
+                                </ul>
+                                <ul style="list-style: none; padding: 0; margin-top: 0.1rem; text-align: center;">
+                                    <li style="margin-bottom: 2rem;"><a href="https://gift.sjtu.edu.cn/faculty" style="color: #fff; text-decoration: none; font-weight: bold;">师资力量</a></li>
+                                    <li style="margin-bottom: 2rem;"><a href="https://gift.sjtu.edu.cn/campus" style="color: #fff; text-decoration: none; font-weight: bold;">校园生活</a></li>
+                                    <li style="margin-bottom: 2rem;"><a href="https://gift.sjtu.edu.cn/develop" style="color: #fff; text-decoration: none; font-weight: bold;">人才培养</a></li>
+                                    <li style="margin-bottom: 2rem;"><a href="https://gift.sjtu.edu.cn/joinus" style="color: #fff; text-decoration: none; font-weight: bold;">加入我们</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右栏 - 社交媒体 -->
+                    <div class="center4" style="overflow: hidden; padding-left: 7.5rem; padding-right: 2rem;">
+                        <div class="qitem" style="margin-bottom: 1rem; text-align: center;">
+                            <div class="name" 
+                                style="font-size: 1.1rem; font-weight: bold; margin-bottom: 0.8rem; color: #fff; position: relative; padding-bottom: 0.3rem; display: inline-block;">
+                                社交媒体
+                            </div>
+                            <div style="display: flex; justify-content: center; align-items: flex-start; gap: 1.5rem;">
+                                <div class="qrcode-item" style="text-align: center;">
+                                    <img src="https://gift.sjtu.edu.cn/_upload/tpl/00/1c/28/template28/./images/qrcode-1.png" 
+                                         style="width: 150px; height: 150px; border-radius: 4px; border: 1px solid #fff;">
+                                    <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #fff;">官方微信公众号</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a target="_blank" href="https://gift.sjtu.edu.cn/storage/gift/web/cn/file/2025/08/caee27912aa5fde8524164a66013a399.pdf"
+                            style="color: #fff; text-decoration: none; font-weight: bold; display: block; text-align: center; margin-top: -0.5rem; font-size: 1.1rem;">
+                            学院宣传册
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 底部版权 -->
+<div class="foot-bot" style="border-top: 1px solid #fff; padding-top: 1rem; text-align: center;">
+    <p style="color: #fff; font-size: 0.85rem; margin: 0 0 0.3rem 0;">© 2025 溥渊科协网络管理系统. 保留所有权利.</p>
+    <p style="color: #fff; font-size: 0.85rem; margin: 0;">上海交通大学溥渊未来技术学院</p>
+</div>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ================= 加载作品图片 =================
+            async function loadWorkshopWorks() {
+                try {
+                    const response = await fetch('/api/workshop/works', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.data && result.data.works) {
+                        const galleryContainer = document.getElementById('galleryContainer');
+                        galleryContainer.innerHTML = '';
+
+                        result.data.works.forEach((imgSrc, index) => {
+                            const galleryItem = document.createElement('div');
+                            galleryItem.className = 'gallery-item';
+                            galleryItem.innerHTML = `
+                                <img src="${imgSrc}" alt="作品${index + 1}">
+                            `;
+                            galleryContainer.appendChild(galleryItem);
+                        });
+                    }
+                } catch (error) {
+                    console.error('加载作品图片失败:', error);
+                }
+            }
+
+            // ================= 加载新闻列表 =================
+            async function loadNews() {
+                try {
+                    const response = await fetch('/api/news/links', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.data) {
+                        const newsList = document.getElementById('newsList');
+                        newsList.innerHTML = '';
+
+                        const { links, titles, briefs } = result.data;
+                        const newsCount = Math.min(links.length, titles.length, briefs.length);
+
+                        for (let i = 0; i < newsCount; i++) {
+                            const newsItem = document.createElement('li');
+                            newsItem.className = 'news-item';
+                            newsItem.innerHTML = `
+                                <h4>
+                                    <a href="${links[i]}" style="color: inherit; text-decoration: none;">${titles[i]}</a>
+                                </h4>
+                                <p>${briefs[i]}</p>
+                            `;
+                            newsList.appendChild(newsItem);
+                        }
+                    }
+                } catch (error) {
+                    console.error('加载新闻失败:', error);
+                    const newsList = document.getElementById('newsList');
+                    newsList.innerHTML = `
+                        <li class="news-item">
+                            <h4><a href="#" style="color: inherit; text-decoration: none;">暂无新闻</a></h4>
+                            <p>无法加载新闻内容，请稍后重试</p>
+                        </li>
+                    `;
+                }
+            }
+
+            // 页面加载时调用API
+            loadWorkshopWorks();
+            loadNews();
+
+            // ================= 检查登录状态 =================
+            async function checkLoginStatus() {
+                try {
+                    const response = await fetch('/api/user/status', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.data && result.data.logged_in) {
+                        const loginBtn = document.getElementById('loginBtn');
+                        const loginBtnText = document.getElementById('loginBtnText');
+
+                        loginBtn.classList.add('logged-in');
+                        loginBtn.href = 'user.html';
+                        loginBtnText.textContent = `欢迎, ${result.data.username || '用户'}`;
+                    }
+                } catch (error) {
+                    console.log('未登录或检查登录状态失败');
+                }
+            }
+
+            checkLoginStatus();
+        });
+    </script>
+</body>
+</html>

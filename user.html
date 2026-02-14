@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户中心 - 3D打印工坊预约系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/user.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo-group" style="display: flex; align-items: center;">
+                <a href="index.html" class="logo" style="text-decoration: none;">
+                    <img src="images/icons/溥渊LOGO.png" alt="溥渊LOGO" style="height: 40px; margin-right: 15px;">
+                </a>
+                <a href="index.html" class="logo" style="text-decoration: none;">
+                    <img src="images/icons/科协LOGO.jpg" alt="科协LOGO" style="height: 45px;">
+                </a>
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> 首页</a>
+                <a href="workshop.html"><i class="fas fa-cube"></i> 3D打印工坊</a>
+                <a href="about.html"><i class="fas fa-info-circle"></i> 关于我们</a>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> <span>退出登录</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title"><i class="fas fa-user-circle"></i> 用户中心</h1>
+            <p class="page-subtitle">管理您的个人信息和3D打印申请</p>
+        </div>
+
+        <!-- 用户信息卡片 -->
+        <div class="user-profile-card">
+            <div class="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="user-info">
+                <h2 id="userName">加载中...</h2>
+                <div class="user-details">
+                    <div class="detail-item">
+                        <i class="fas fa-envelope"></i>
+                        <span id="userEmail">loading@example.com</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-id-card"></i>
+                        <span>学号: <span id="userStudentId">000000000</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>注册时间: <span id="userRegisterDate">2024-01-01</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 内容网格 -->
+        <div class="content-grid">
+            <!-- 我的申请 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-list-ul"></i> 我的申请</h3>
+                    <span class="card-badge" id="applicationCount">0</span>
+                </div>
+
+                <div class="application-list" id="applicationList">
+                    <!-- 申请列表将通过JavaScript动态加载 -->
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>加载中...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 我的作品 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-images"></i> 我的作品</h3>
+                    <span class="card-badge" id="worksCount">0</span>
+                </div>
+
+                <div class="works-gallery" id="worksGallery">
+                    <!-- 作品画廊将通过JavaScript动态加载 -->
+                    <div class="empty-state">
+                        <i class="fas fa-image"></i>
+                        <p>加载中...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background: var(--card-background); padding: 2rem; text-align: center; margin-top: 2rem; border-top: 1px solid var(--border-color);">
+        <p style="color: var(--text-secondary); font-size: 0.85rem;">&copy; 2025 溥渊科协网络管理系统. 保留所有权利.</p>
+        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">上海交通大学溥渊未来技术学院</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ================= 加载用户信息 =================
+            async function loadUserInfo() {
+                try {
+                    const response = await fetch('/api/user/info', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.data) {
+                        const userData = result.data;
+                        document.getElementById('userName').textContent = userData.username || '未命名用户';
+                        document.getElementById('userEmail').textContent = userData.email || 'no-email@example.com';
+                        document.getElementById('userStudentId').textContent = userData.studentId || '未提供';
+                        document.getElementById('userRegisterDate').textContent = userData.registerDate || '未知';
+                    } else {
+                        // 未登录，跳转到登录页
+                        window.location.href = 'login.html';
+                    }
+                } catch (error) {
+                    console.error('加载用户信息失败:', error);
+                    alert('加载用户信息失败，请重新登录');
+                    window.location.href = 'login.html';
+                }
+            }
+
+            // ================= 加载申请列表 =================
+            async function loadApplications() {
+                try {
+                    const response = await fetch('/api/user/applications', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.data && result.data.applications) {
+                        const applications = result.data.applications;
+                        const applicationList = document.getElementById('applicationList');
+                        const applicationCount = document.getElementById('applicationCount');
+
+                        applicationCount.textContent = applications.length;
+
+                        if (applications.length === 0) {
+                            applicationList.innerHTML = `
+                                <div class="empty-state">
+                                    <i class="fas fa-inbox"></i>
+                                    <p>您还没有提交任何申请</p>
+                                    <a href="workshop.html">前往提交申请</a>
+                                </div>
+                            `;
+                        } else {
+                            applicationList.innerHTML = '';
+                            applications.forEach(app => {
+                                const statusClass = getStatusClass(app.status);
+                                const statusText = getStatusText(app.status);
+
+                                const appItem = document.createElement('div');
+                                appItem.className = 'application-item';
+                                appItem.innerHTML = `
+                                    <div class="application-header">
+                                        <span class="application-title">${app.title || '3D打印申请'}</span>
+                                        <span class="application-status ${statusClass}">${statusText}</span>
+                                    </div>
+                                    <div class="application-meta">
+                                        <span><i class="fas fa-cube"></i> ${app.material || 'PLA'}</span>
+                                        <span><i class="fas fa-calendar"></i> ${app.submitDate || '未知'}</span>
+                                        <span><i class="fas fa-clock"></i> ${app.estimatedTime || '未知'}</span>
+                                    </div>
+                                `;
+                                appItem.addEventListener('click', () => {
+                                    // 跳转到申请详情页（占位符）
+                                    alert(`申请详情：${app.id || 'unknown'}\n状态：${statusText}\n材料：${app.material || 'PLA'}`);
+                                });
+                                applicationList.appendChild(appItem);
+                            });
+                        }
+                    } else {
+                        // 显示占位符数据
+                        displayPlaceholderApplications();
+                    }
+                } catch (error) {
+                    console.error('加载申请列表失败:', error);
+                    displayPlaceholderApplications();
+                }
+            }
+
+            function displayPlaceholderApplications() {
+                const applicationList = document.getElementById('applicationList');
+                const applicationCount = document.getElementById('applicationCount');
+
+                const placeholderApps = [
+                    { id: 1, title: '示例打印申请 #1', status: 'approved', material: 'PLA 白色', submitDate: '2024-01-15', estimatedTime: '3小时' },
+                    { id: 2, title: '示例打印申请 #2', status: 'printing', material: 'ABS 黑色', submitDate: '2024-01-16', estimatedTime: '5小时' },
+                    { id: 3, title: '示例打印申请 #3', status: 'pending', material: 'PLA 红色', submitDate: '2024-01-17', estimatedTime: '2小时' }
+                ];
+
+                applicationCount.textContent = placeholderApps.length;
+                applicationList.innerHTML = '';
+
+                placeholderApps.forEach(app => {
+                    const statusClass = getStatusClass(app.status);
+                    const statusText = getStatusText(app.status);
+
+                    const appItem = document.createElement('div');
+                    appItem.className = 'application-item';
+                    appItem.innerHTML = `
+                        <div class="application-header">
+                            <span class="application-title">${app.title}</span>
+                            <span class="application-status ${statusClass}">${statusText}</span>
+                        </div>
+                        <div class="application-meta">
+                            <span><i class="fas fa-cube"></i> ${app.material}</span>
+                            <span><i class="fas fa-calendar"></i> ${app.submitDate}</span>
+                            <span><i class="fas fa-clock"></i> ${app.estimatedTime}</span>
+                        </div>
+                    `;
+                    appItem.addEventListener('click', () => {
+                        alert(`申请详情（占位符）\nID: ${app.id}\n状态：${statusText}\n材料：${app.material}`);
+                    });
+                    applicationList.appendChild(appItem);
+                });
+            }
+
+            // ================= 加载作品画廊 =================
+            async function loadWorks() {
+                try {
+                    const response = await fetch('/api/user/works', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.data && result.data.works) {
+                        const works = result.data.works;
+                        const worksGallery = document.getElementById('worksGallery');
+                        const worksCount = document.getElementById('worksCount');
+
+                        worksCount.textContent = works.length;
+
+                        if (works.length === 0) {
+                            worksGallery.innerHTML = `
+                                <div class="empty-state" style="grid-column: 1 / -1;">
+                                    <i class="fas fa-image"></i>
+                                    <p>您还没有完成的作品</p>
+                                    <a href="workshop.html">前往提交申请</a>
+                                </div>
+                            `;
+                        } else {
+                            worksGallery.innerHTML = '';
+                            works.forEach((work, index) => {
+                                const workItem = document.createElement('div');
+                                workItem.className = 'work-item';
+                                if (work.imageUrl) {
+                                    workItem.innerHTML = `
+                                        <img src="${work.imageUrl}" alt="作品 ${index + 1}">
+                                        <div class="work-overlay">${work.title || '作品 ' + (index + 1)}</div>
+                                    `;
+                                } else {
+                                    workItem.innerHTML = `
+                                        <div class="work-placeholder"><i class="fas fa-cube"></i></div>
+                                        <div class="work-overlay">${work.title || '作品 ' + (index + 1)}</div>
+                                    `;
+                                }
+                                workItem.addEventListener('click', () => {
+                                    alert(`作品详情（占位符）\n作品名称：${work.title || '未命名'}\n完成日期：${work.completedDate || '未知'}`);
+                                });
+                                worksGallery.appendChild(workItem);
+                            });
+                        }
+                    } else {
+                        // 显示占位符数据
+                        displayPlaceholderWorks();
+                    }
+                } catch (error) {
+                    console.error('加载作品画廊失败:', error);
+                    displayPlaceholderWorks();
+                }
+            }
+
+            function displayPlaceholderWorks() {
+                const worksGallery = document.getElementById('worksGallery');
+                const worksCount = document.getElementById('worksCount');
+
+                const placeholderWorks = [
+                    { id: 1, title: '示例作品 #1', completedDate: '2024-01-10' },
+                    { id: 2, title: '示例作品 #2', completedDate: '2024-01-12' },
+                    { id: 3, title: '示例作品 #3', completedDate: '2024-01-14' },
+                    { id: 4, title: '示例作品 #4', completedDate: '2024-01-16' }
+                ];
+
+                worksCount.textContent = placeholderWorks.length;
+                worksGallery.innerHTML = '';
+
+                placeholderWorks.forEach((work, index) => {
+                    const workItem = document.createElement('div');
+                    workItem.className = 'work-item';
+                    workItem.innerHTML = `
+                        <div class="work-placeholder"><i class="fas fa-cube"></i></div>
+                        <div class="work-overlay">${work.title}</div>
+                    `;
+                    workItem.addEventListener('click', () => {
+                        alert(`作品详情（占位符）\n作品名称：${work.title}\n完成日期：${work.completedDate}`);
+                    });
+                    worksGallery.appendChild(workItem);
+                });
+            }
+
+            // ================= 辅助函数 =================
+            function getStatusClass(status) {
+                const statusMap = {
+                    'pending': 'status-pending',
+                    'approved': 'status-approved',
+                    'rejected': 'status-rejected',
+                    'printing': 'status-printing'
+                };
+                return statusMap[status] || 'status-pending';
+            }
+
+            function getStatusText(status) {
+                const textMap = {
+                    'pending': '待审核',
+                    'approved': '已通过',
+                    'rejected': '已拒绝',
+                    'printing': '打印中'
+                };
+                return textMap[status] || '未知';
+            }
+
+            // ================= 退出登录 =================
+            document.getElementById('logoutBtn').addEventListener('click', async function() {
+                if (confirm('确定要退出登录吗？')) {
+                    try {
+                        const response = await fetch('/api/logout', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+
+                        if (response.ok) {
+                            alert('退出登录成功！');
+                            window.location.href = 'index.html';
+                        } else {
+                            throw new Error('退出登录失败');
+                        }
+                    } catch (error) {
+                        console.error('Logout Error:', error);
+                        alert('退出登录失败，请稍后重试');
+                    }
+                }
+            });
+
+            // ================= 页面加载时初始化 =================
+            loadUserInfo();
+            loadApplications();
+            loadWorks();
+        });
+    </script>
+</body>
+</html>

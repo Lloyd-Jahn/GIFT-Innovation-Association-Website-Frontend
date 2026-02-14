@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D打印工坊 - 预约与状态</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/workshop.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo-group" style="display: flex; align-items: center;">
+                <a href="index.html" class="logo" style="text-decoration: none;">
+                    <img src="images/icons/溥渊LOGO.png" alt="溥渊LOGO" style="height: 40px; margin-right: 15px;">
+                </a>
+                <a href="index.html" class="logo" style="text-decoration: none;">
+                    <img src="images/icons/科协LOGO.jpg" alt="科协LOGO" style="height: 45px; margin-left: 27.3px;">
+                </a>
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> 首页</a>
+                <a href="workshop.html"><i class="fas fa-cube"></i> 3D打印工坊</a>
+                <a href="about.html"><i class="fas fa-info-circle"></i> 关于我们</a>
+                <a href="login.html" id="loginBtn"><i class="fas fa-sign-in-alt"></i> <span id="loginBtnText">登录 / 注册</span></a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="print-section">
+            <div class="print-left">
+                <h3 class="section-title"><i class="fas fa-file-upload"></i>3D打印预约模块</h3>
+
+                <form id="printForm">
+                    <div class="file-upload" id="fileUpload">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h4>点击上传3D模型文件</h4>
+                        <p>只接受3mf格式文件</p>
+                        <small>支持拖拽上传</small>
+                        <input type="file" id="fileInput" name="print-file" accept=".3mf" style="display: none;" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">打印材料型号</label>
+                        <input type="text" class="form-input" id="materialModel" name="model"
+                               placeholder="请输入材料型号（如PLA Silk，ABS Lite）" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">材料名称与颜色</label>
+                        <div class="material-inputs">
+                            <input type="text" class="form-input" id="materialName" name="material"
+                                   placeholder="材料名称（如PLA、ABS）" required>
+                            <input type="text" class="form-input" id="materialColor" name="color"
+                                   placeholder="颜色" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">预计打印时间</label>
+                        <div class="time-inputs">
+                            <div class="time-input">
+                                <input type="number" class="form-input" id="printHours"
+                                       placeholder="时" min="0" max="24">
+                            </div>
+                            <div class="time-input">
+                                <input type="number" class="form-input" id="printMinutes"
+                                       placeholder="分" min="0" max="59">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">可前往工坊打印时间</label>
+                        <div class="time-table-wrapper">
+                            <table class="time-table">
+                                <thead>
+                                    <tr>
+                                        <th>时间段</th>
+                                        <th>周一</th>
+                                        <th>周二</th>
+                                        <th>周三</th>
+                                        <th>周四</th>
+                                        <th>周五</th>
+                                        <th>周六</th>
+                                        <th>周日</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>上午<br><small>8:00-12:00</small></th>
+                                        <td><input type="checkbox" name="time_Monday" value="morning"></td>
+                                        <td><input type="checkbox" name="time_Tuesday" value="morning"></td>
+                                        <td><input type="checkbox" name="time_Wednesday" value="morning"></td>
+                                        <td><input type="checkbox" name="time_Thursday" value="morning"></td>
+                                        <td><input type="checkbox" name="time_Friday" value="morning"></td>
+                                        <td><input type="checkbox" name="time_Saturday" value="morning"></td>
+                                        <td><input type="checkbox" name="time_Sunday" value="morning"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>下午<br><small>12:00-18:00</small></th>
+                                        <td><input type="checkbox" name="time_Monday" value="afternoon"></td>
+                                        <td><input type="checkbox" name="time_Tuesday" value="afternoon"></td>
+                                        <td><input type="checkbox" name="time_Wednesday" value="afternoon"></td>
+                                        <td><input type="checkbox" name="time_Thursday" value="afternoon"></td>
+                                        <td><input type="checkbox" name="time_Friday" value="afternoon"></td>
+                                        <td><input type="checkbox" name="time_Saturday" value="afternoon"></td>
+                                        <td><input type="checkbox" name="time_Sunday" value="afternoon"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>晚上<br><small>18:00-22:00</small></th>
+                                        <td><input type="checkbox" name="time_Monday" value="evening"></td>
+                                        <td><input type="checkbox" name="time_Tuesday" value="evening"></td>
+                                        <td><input type="checkbox" name="time_Wednesday" value="evening"></td>
+                                        <td><input type="checkbox" name="time_Thursday" value="evening"></td>
+                                        <td><input type="checkbox" name="time_Friday" value="evening"></td>
+                                        <td><input type="checkbox" name="time_Saturday" value="evening"></td>
+                                        <td><input type="checkbox" name="time_Sunday" value="evening"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="time-table-info">
+                            <i class="fas fa-info-circle"></i>
+                            <span>请勾选您方便前往工坊的时间段，以便我们为您安排合适的打印时间</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span id="btnText">提交申请</span>
+                    </button>
+                </form>
+            </div>
+
+            <div class="print-right">
+                <h3 class="section-title"><i class="fas fa-tasks"></i>申请状态</h3>
+                <div class="status-item">
+                    <div class="status-label">申请状态</div>
+                    <div class="status-value status-approved">通过</div>
+                </div>
+            <div class="status-item">
+                <div class="status-label">打印时间</div>
+                <div class="status-value">2024-01-15 14:00</div>
+                <div class="status-label" style="margin-top: 15px;">打印机编号</div>
+                <div class="status-value">#GIFT3</div>
+            </div>
+                <div class="status-item">
+                    <div class="status-label">打印进度</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                    <div class="status-value">65%</div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn"><i class="fas fa-check"></i> 我已取件</button>
+                </div>
+            </div>
+
+            <div class="list-section">
+                <h3 class="section-title"><i class="fas fa-list-alt"></i>工坊资源清单</h3>
+
+                <div class="list-container">
+                    <div class="resource-card" onclick="window.open('https://feishu.cn', '_blank')">
+                        <div class="resource-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="resource-content">
+                            <h4 class="resource-title">工坊工具清单</h4>
+                            <p class="resource-description">查看工坊内所有可用工具设备，包括3D打印机等</p>
+                            <div class="resource-meta">
+                                <span class="resource-tag">飞书文档</span>
+                            </div>
+                        </div>
+                        <div class="resource-action">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="window.open('https://feishu.cn', '_blank')">
+                        <div class="resource-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <div class="resource-content">
+                            <h4 class="resource-title">3D打印耗材清单</h4>
+                            <p class="resource-description">查看当前可使用的打印材料，包括PLA、ABS等材料库存与规格</p>
+                            <div class="resource-meta">
+                                <span class="resource-tag">飞书文档</span>
+                            </div>
+                        </div>
+                        <div class="resource-action">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background: var(--card-background); padding: 2rem; text-align: center; margin-top: 2rem; border-top: 1px solid var(--border-color); margin-bottom: 60px;">
+        <p style="color: var(--text-secondary); font-size: 0.85rem;">&copy; 2025 溥渊科协网络管理系统. 保留所有权利.</p>
+        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">上海交通大学溥渊未来技术学院</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const printForm = document.getElementById('printForm');
+            const fileUpload = document.getElementById('fileUpload');
+            const fileInput = document.getElementById('fileInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+
+            // 文件上传区域点击事件
+            fileUpload.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            // 文件选择事件
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file && file.name.toLowerCase().endsWith('.3mf')) {
+                    fileUpload.innerHTML = `
+                        <i class="fas fa-file"></i>
+                        <h4>${file.name}</h4>
+                        <p>文件已上传成功</p>
+                    `;
+                } else {
+                    alert('请上传.3mf格式的文件');
+                    fileInput.value = '';
+                }
+            });
+
+            // 拖拽上传
+            fileUpload.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#3b82f6';
+                this.style.backgroundColor = 'rgba(59, 130, 246, 0.05)';
+            });
+
+            fileUpload.addEventListener('dragleave', function(e) {
+                this.style.borderColor = '#e2e8f0';
+                this.style.backgroundColor = '#f8fafc';
+            });
+
+            fileUpload.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#e2e8f0';
+                this.style.backgroundColor = '#f8fafc';
+
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    fileInput.dispatchEvent(new Event('change'));
+                }
+            });
+
+            // 表单提交
+            printForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // 获取表单数据
+                const formData = new FormData(this);
+
+                // 构建 allowed_time 对象
+                const allowedTime = {};
+                const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+                days.forEach(day => {
+                    const checkboxes = document.querySelectorAll(`input[name="time_${day}"]:checked`);
+                    if (checkboxes.length > 0) {
+                        allowedTime[day] = Array.from(checkboxes).map(cb => cb.value);
+                    }
+                });
+
+                // 准备提交数据
+                const submitData = {
+                    "print-file": formData.get('print-file'),
+                    "material": formData.get('material'),
+                    "model": formData.get('model'),
+                    "color": formData.get('color'),
+                    "allowed_time": allowedTime
+                };
+
+                // UI进入加载状态
+                btnText.innerHTML = '<div class="loading"></div>';
+                submitBtn.disabled = true;
+
+                try {
+                    // 由于包含文件，需要使用 FormData
+                    const uploadData = new FormData();
+                    uploadData.append('print-file', formData.get('print-file'));
+                    uploadData.append('material', submitData.material);
+                    uploadData.append('model', submitData.model);
+                    uploadData.append('color', submitData.color);
+                    uploadData.append('allowed_time', JSON.stringify(submitData.allowed_time));
+
+                    // 发送 POST 请求
+                    const response = await fetch('/workshop/index', {
+                        method: 'POST',
+                        body: uploadData
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        alert('申请已提交，请等待审核！');
+                        printForm.reset();
+                        // 重置文件上传区域
+                        fileUpload.innerHTML = `
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h4>点击上传3D模型文件</h4>
+                            <p>只接受3mf格式文件</p>
+                            <small>支持拖拽上传</small>
+                        `;
+                    } else {
+                        throw new Error(result.message || '提交失败，请稍后重试');
+                    }
+                } catch (error) {
+                    console.error('Submit Error:', error);
+                    alert(error.message || '网络连接错误，请稍后重试');
+                } finally {
+                    // 恢复按钮状态
+                    btnText.textContent = '提交申请';
+                    submitBtn.disabled = false;
+                }
+            });
+
+            // 检查登录状态
+            async function checkLoginStatus() {
+                try {
+                    const response = await fetch('/api/user/status', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.data && result.data.logged_in) {
+                        const loginBtn = document.getElementById('loginBtn');
+                        const loginBtnText = document.getElementById('loginBtnText');
+
+                        loginBtn.classList.add('logged-in');
+                        loginBtn.href = 'user.html';
+                        loginBtnText.textContent = `欢迎, ${result.data.username || '用户'}`;
+                    }
+                } catch (error) {
+                    console.log('未登录或检查登录状态失败');
+                }
+            }
+
+            checkLoginStatus();
+        });
+    </script>
+</body>
+</html>
