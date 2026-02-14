@@ -50,7 +50,6 @@ body {
     align-items: center;
 }
 
-/* 修复多页面内联 logo 样式导致的轻微偏移 */
 .logo-group img {
     display: inline-block !important;
     vertical-align: middle !important;
